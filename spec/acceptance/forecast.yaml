@@ -1,0 +1,29 @@
+scenarios:
+  - name: peak_mae_t15
+    window: 15
+    period: peak
+    metric: MAE
+    threshold: 2.0
+  - name: peak_rmse_t15
+    window: 15
+    period: peak
+    metric: RMSE
+    threshold: 3.5
+  - name: offpeak_mae_t30
+    window: 30
+    period: offpeak
+    metric: MAE
+    threshold: 2.5
+  - name: offpeak_rmse_t30
+    window: 30
+    period: offpeak
+    metric: RMSE
+    threshold: 3.8
+  - name: allday_mae_t60
+    window: 60
+    period: all
+    metric: MAE
+    threshold: 3.0
+  - name: deck_layers_present
+    check: deckgl_layers
+    layers: ["ScatterplotLayer", "HeatmapLayer"]

@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - work
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Ensure critical spec files exist
+        run: |
+          test -f spec/feature-youbike-demand.md
+          ls docs/adr/0001-*.md
+
+      - name: Run evaluation scaffold
+        run: python model/evaluate.py
+
+      - name: Run pytest
+        run: pytest
+
+      - name: Upload metrics artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: metrics
+          path: reports/metrics.json
